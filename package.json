@@ -4,9 +4,14 @@
   "description": "",
   "main": "healthcare-plan.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "jasmine-core": "^2.6.2",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-jasmine": "^1.1.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/karma/bin/karma start"
   },
   "author": "",
   "license": "ISC"
