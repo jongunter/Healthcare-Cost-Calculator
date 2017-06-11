@@ -22,7 +22,7 @@ class HealthcarePlan {
         let total = this.yearlyPremiumCost;
 
         if(this.deductibleNotExceeded(totalYearBillAmount)){
-            total += this.totalYearBillAmount
+            total += totalYearBillAmount
         } else {
             let amountLeftToBill = totalYearBillAmount;
 
@@ -33,7 +33,7 @@ class HealthcarePlan {
             // co-payment segment
             let coPay = this.coPayPercent * amountLeftToBill;
             if(this.deductible + coPay >= this.outOfPocketMax){
-                total = this.yearlyMaxCost;
+                total = this.outOfPocketMax;
             } else {
                 total =+ this.coPay;
             }
@@ -42,7 +42,6 @@ class HealthcarePlan {
 
         return total;
 
-       
     }
 
     deductibleNotExceeded(totalYearBillAmount){
