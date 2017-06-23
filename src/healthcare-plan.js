@@ -1,6 +1,7 @@
 const MONTHS_IN_YEAR = 12;
 const ONE_HUNDRED_PERCENT = 1;
 
+
 class HealthcarePlan {
 
     constructor(premium, deductible, percentPaid, outOfPocketMax){
