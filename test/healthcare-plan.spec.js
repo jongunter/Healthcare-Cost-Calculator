@@ -1,7 +1,7 @@
 
 let plan;
 beforeEach(()=>{
-        plan = new HealthcarePlan(100, 5000, 0.8, 7100);
+        plan = new HealthcarePlan(100, 100, 0.7, 200);
 })
 
 describe('under deductible', function() {
@@ -12,8 +12,10 @@ describe('under deductible', function() {
     });
 
     it('returns yearly premium + expenses', ()=> {
-        let yearlyCosts = plan.caculateOutOfPocketCostForYear(4000);
-        expect(yearlyCosts).toBe(1200 + 4000);
+        const YEARLY_PREMIUM = 1200;
+        const EXPENSES = 50;
+        let yearlyCosts = plan.caculateOutOfPocketCostForYear(EXPENSES);
+        expect(yearlyCosts).toBe(YEARLY_PREMIUM + EXPENSES);
     })
 
 });
@@ -21,10 +23,19 @@ describe('under deductible', function() {
 describe('under OOPM but over deductible', ()=> {
 
     it('returns the right number', ()=> {
+        const YEARLY_PREMIUM = 1200;
+        const EXPENSES = 150;
+        let yearlyCosts = plan.caculateOutOfPocketCostForYear(150);
+        expect(yearlyCosts).toBe(YEARLY_PREMIUM + 100 + 35)
+    })
 
-        let yearlyCosts = plan.caculateOutOfPocketCostForYear(6000);
-        expect(yearlyCosts).toBe(1200 + 5000 + 200)
+})
 
+describe('over OOPM', ()=> {
+
+    it('returns the right number', ()=> {
+        let yearlyCosts = plan.caculateOutOfPocketCostForYear(1000);
+        expect(yearlyCosts).toBe(200);
     })
 
 })
