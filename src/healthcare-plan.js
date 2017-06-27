@@ -33,11 +33,12 @@ class HealthcarePlan {
 
             // co-payment segment
             let coInsurance = this.percentPaid * amountLeftToBill;
+            let coPay = amountLeftToBill - coInsurance;
             
-            if(this.deductible + coInsurance >= this.outOfPocketMax){
-                total = this.outOfPocketMax;
+            if(this.deductible + coPay >= this.outOfPocketMax){
+                total = this.outOfPocketMax + this.yearlyPremiumCost;
             } else {
-                total += coInsurance;
+                total += coPay;
             }
 
         }

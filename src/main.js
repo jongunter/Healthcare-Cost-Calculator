@@ -1,9 +1,9 @@
-const BILLED_AMOUNTS = [0, 100, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 30000, 40000, 50000, 100000, 500000, 1000000];
+const BILLED_AMOUNTS = [0, 100, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 30000];
 const CHART_CONTAINER = document.getElementById('chart');
-
+const LOCAL_STORAGE_KEY = 'plans';
 const BILLED_AMOUNTS_DOLLARS = BILLED_AMOUNTS.map(a => '$' + String(a));
 
-var data = [
+const DEFAULT_PLANS = [
   {
     planName: 'Sample Plan',
     monthlyPremium: 350,
@@ -13,6 +13,25 @@ var data = [
   }
 ];
 
+
+function getPlansFromStorage(){
+    var plansFromStorage = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if(!plansFromStorage){
+        return DEFAULT_PLANS;
+    } else {
+        return JSON.parse(plansFromStorage);
+    }
+
+}
+
+function savePlansToStorage(plans){
+    const jsonString = JSON.stringify(plans);
+    localStorage.setItem(LOCAL_STORAGE_KEY, jsonString);
+}
+
+
+var data = getPlansFromStorage();
+
 var container = document.getElementById('worksheet');
 var hot = new Handsontable(container, {
   data: data,
@@ -20,6 +39,7 @@ var hot = new Handsontable(container, {
   colHeaders: ['Plan', 'Montly Premium', 'Deductible', 'Coinsurance', 'Out-of-pocket Max'],
   afterChange: function(){
     var plans = getCostChartData(data);
+    savePlansToStorage(data);
     drawChart(plans)
   },
   minSpareRows: 5,
