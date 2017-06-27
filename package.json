@@ -8,7 +8,8 @@
     "chart.js": "^2.6.0",
     "handsontable": "^0.32.0",
     "http-server": "^0.10.0",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "randomcolor": "^0.5.3"
   },
   "devDependencies": {
     "jasmine": "^2.6.0",
