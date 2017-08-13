@@ -1,5 +1,6 @@
 const BILLED_AMOUNTS = [0, 100, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 30000, 50000, 100000];
 const CHART_CONTAINER = document.getElementById('chart');
+const TABLE = document.getElementById('table');
 const LOCAL_STORAGE_KEY = 'plans';
 const BILLED_AMOUNTS_DOLLARS = BILLED_AMOUNTS.map(a => '$' + String(a));
 
@@ -40,7 +41,8 @@ var hot = new Handsontable(container, {
   afterChange: function(){
     var plans = getCostChartData(data);
     savePlansToStorage(data);
-    drawChart(plans)
+    drawChart(plans);
+    makeTable(plans);
   },
   minSpareRows: 5,
   columns: [
@@ -70,6 +72,27 @@ var hot = new Handsontable(container, {
 
   ]
 });
+
+function makeTable(plans){
+    var bestPlanByAmount = BILLED_AMOUNTS.map((totalExpenditures, index) => {
+        var bestPlan = _.minBy(plans, plan => plan.costs[index])
+        return {
+            amount: totalExpenditures,
+            planName: bestPlan.name,
+            totalCosts: bestPlan.costs[index]
+        }
+    });
+
+    let tableHtml = `<tr><th>Billed Amount</th><th>Best Plan Name</th><th>Best Plan Costs</th>`;
+    bestPlanByAmount.forEach(planInfo => {
+        tableHtml += `<tr><td>${planInfo.amount}</td><td>${planInfo.planName}</td><td>$${planInfo.totalCosts}</td></tr>`
+    });
+
+
+    table.innerHTML = tableHtml;
+    
+
+}
 
 function drawChart(plans){
 
