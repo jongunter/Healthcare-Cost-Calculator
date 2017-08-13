@@ -37,6 +37,11 @@ describe('over OOPM', ()=> {
         const YEARLY_PREMIUM = 1200;
         let yearlyCosts = plan.caculateOutOfPocketCostForYear(1000);
         expect(yearlyCosts).toBe(200 + 1200);
+    });
+
+    it('returns the right number when a huge cost is recorded', ()=> {
+        let yearlyCosts = plan.caculateOutOfPocketCostForYear(1000000);
+        expect(yearlyCosts).toBe(200 + 1200);  
     })
 
 })
